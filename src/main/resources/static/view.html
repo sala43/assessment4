@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>EMPLOYEE DETAILS !!!</h1>
+<table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th>EMPLOYEE ID</th>
+        <th>EMPLOYEE NAME</th>
+        <th>EMPLOYEE AGE</th>
+        <th>ADDRESS I</th>
+        <th>ADDRESS II</th>
+        <th>EMPLOYEE CITY</th>
+        <th>PIN CODE</th>
+        <th>ACTION</th>
+    </tr>
+    </thead>
+    <tbody id="tBody">
+    </tbody>
+
+</table>
+<button CLASS="btn btn-primary" onclick="homePage()">ADD EMPLOYEE</button>
+<script>
+    $(document).ready(function () {
+        getAllEmployee();
+    });
+
+    function getAllEmployee() {
+        $.ajax({
+            url: 'http://localhost:8080/Employee/getAllEmployee',
+            type: 'GET',
+            success: function (employees) {
+                var tableBody = $('#tBody').empty();
+                employees.forEach(function (employee) {
+                    var row = '<tr>' +
+                        '<td>' + employee.employeeId + '</td>' +
+                        '<td>' + employee.employeeName + '</td>' +
+                        '<td>' + employee.employeeAge + '</td>' +
+                        '<td>' + employee.addressI + '</td>' +
+                        '<td>' + employee.addressII + '</td>' +
+                        '<td>' + employee.employeeCity + '</td>' +
+                        '<td>' + employee.pinCode + '</td>' +
+                        '<td>' +
+                        '<button class="btn btn-primary" onclick="updateEmployee(' + employee.employeeId + ')">UPDATE</button>' +
+                        '<button class="btn btn-danger" onclick="deleteEmployee(' + employee.employeeId + ')">DELETE</button>' +
+                        '</td>' +
+                        '</tr>';
+                    tableBody.append(row);
+                });
+            }
+        });
+    }
+
+    function updateEmployee(empId) {
+        localStorage.setItem("id", empId);
+        window.location.href = "update.html"
+    }
+
+    function deleteEmployee(empId) {
+        $.ajax({
+            url: 'http://localhost:8080/Employee/deleteEmployee/' + empId,
+            type: 'DELETE',
+            success: function () {
+                getAllEmployee();
+            }
+        })
+    }
+function homePage(){
+    window.location.href = "index.html"
+}
+</script>
+
+</body>
+</html>

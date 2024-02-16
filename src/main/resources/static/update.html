@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>UPDATE EMPLOYEE !!!</h1><br>
+<label>EMPLOYEE ID :</label><br>
+<input type="number" id="id" name="id"><br>
+<label>EMPLOYEE NAME :</label><br>
+<input type="text" id="name" name="name"><br>
+<label>EMPLOYEE AGE :</label><br>
+<label>EMPLOYEE ADDRESSI :</label><br>
+<input type="text" id="addressI" name="addressI"><br>
+<label>EMPLOYEE ADDRESSII :</label><br>
+<input type="text" id="addressII" name="addressII"><br>
+<input type="number" id="age" name="age"><br>
+<label>EMPLOYEE CITY :</label><br>
+<input type="text" id="city" name="city"><br>
+<label>PIN CODE :</label><br>
+<input type="number" id="pincode" name="pincode"><br><br>
+<button class="btn btn-primary" onclick="editEmployee()">UPDATE EMPLOYEE</button>
+<script>
+    $(document).ready(function (){
+      var id=  localStorage.getItem("id");
+
+        $.get('http://localhost:8080/Employee/getEmployee/' + id,function (employee) {
+            {
+                $('#id').val(employee.employeeId)
+                $('#name').val(employee.employeeName)
+                $('#age').val(employee.employeeAge)
+                $('#addressI').val(employee.addressI)
+                 $('#addressII').val(employee.addressII)
+                $('#city').val(employee.employeeCity)
+                $('#pincode').val(employee.pinCode);
+            }
+        })
+    })
+   function editEmployee(employee){
+       var id=$('#id').val();
+       var name = $('#name').val();
+       var age = $('#age').val();
+       var addI = $('#addressI').val();
+       var addII = $('#addressII').val();
+       var city = $('#city').val();
+       var pincode = $('#pincode').val();
+
+       var employee={
+           employeeId:id,
+           employeeName:name,
+           employeeAge:age,
+           addressI:addI,
+           addressII:addII,
+           employeeCity:city,
+           pinCode:pincode
+       }
+       $.ajax({
+           url:'http://localhost:8080/Employee/updateEmployee',
+           type:'PUT',
+           contentType:'application/json',
+           data:JSON.stringify(employee),
+           success:function(){
+               window.location.href="view.html";
+           }
+       })
+   }
+
+
+</script>
+</body>
+</html>

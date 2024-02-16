@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>ADD EMPLOYEE !!!</h1><br>
+<input type="hidden" id="id" name="id"><br>
+<label>EMPLOYEE NAME :</label><br>
+<input type="text" id="name" name="name"><br>
+<label>EMPLOYEE AGE :</label><br>
+<input type="number" id="age" name="age"><br>
+<label>EMPLOYEE ADDRESSI :</label><br>
+<input type="text" id="addressI" name="addressI"><br>
+<label>EMPLOYEE ADDRESSII :</label><br>
+<input type="text" id="addressII" name="addressII"><br>
+<label>EMPLOYEE CITY :</label><br>
+<input type="text" id="city" name="city"><br>
+<label>PIN CODE :</label><br>
+<input type="number" id="pincode" name="pincode"><br><br>
+<button class="btn btn-primary" onclick="insertEmployee()">ADD EMPLOYEE</button>
+
+<script>
+    function insertEmployee() {
+        var id=$('#id').val();
+        var name = $('#name').val();
+        var age = $('#age').val();
+        var addI = $('#addressI').val();
+        var addII = $('#addressII').val();
+        var city = $('#city').val();
+        var pincode = $('#pincode').val();
+
+        var employee={
+            employeeId:id,
+            employeeName:name,
+            employeeAge:age,
+            addressI:addI,
+            addressII:addII,
+            employeeCity:city,
+            pinCode:pincode
+        }
+        $.ajax({
+            url:'http://localhost:8080/Employee/addEmployee',
+            type:'POST',
+            contentType:'application/json',
+            data:JSON.stringify(employee),
+            success:function(){
+                window.location.href="view.html";
+            }
+        })
+    }
+
+
+</script>
+</body>
+</html>
